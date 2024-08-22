@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import apiFetch from '../utils/apiFetch';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -12,7 +13,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/user`, {
+        const response = await apiFetch(`/api/user`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ const Profile = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/user`, {
+      const response = await apiFetch(`/api/user`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

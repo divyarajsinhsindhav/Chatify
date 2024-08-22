@@ -1,14 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useMatch, Link, useNavigate } from 'react-router-dom';
-import { io } from 'socket.io-client';
+import socket from '../utils/socketConnection';
+import apiFetch from '../utils/apiFetch';
 
 const token = localStorage.getItem('token');
-
-const socket = io('http://localhost:3000', {
-  auth: {
-    token: token,
-  },
-});
 
 const ChatBox = () => {
   const [message, setMessage] = useState('');
@@ -37,7 +32,7 @@ const ChatBox = () => {
     if (match) {
       const checkRoomExists = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/api/chatroom/info/${roomId}`, {
+          const response = await apiFetch(`/api/chatroom/info/${roomId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',

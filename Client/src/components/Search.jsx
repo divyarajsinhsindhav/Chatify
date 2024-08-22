@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import apiFetch from '../utils/apiFetch';
 
 export default function Search() {
   const [roomName, setRoomName] = useState('');
@@ -10,7 +11,7 @@ export default function Search() {
 
   const fetchRoom = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/chatroom/find/${roomName}`, {
+      const response = await apiFetch(`/api/chatroom/find/${roomName}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export default function Search() {
   const handleJoinRoom = async () => {
     const userId = localStorage.getItem('userId');
     try {
-      const response = await fetch(`http://localhost:3000/api/chatroom/join/${roomName}`, {
+      const response = await apiFetch(`/api/chatroom/join/${roomName}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

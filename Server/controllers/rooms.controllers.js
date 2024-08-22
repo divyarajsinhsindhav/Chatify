@@ -1,7 +1,6 @@
 const Room = require('../models/rooms.models');
 const User = require('../models/user.model');
 const Message = require('../models/message.model');
-const { io } = require('../app')
 
 exports.createRoom = async (req, res) => {
     try {

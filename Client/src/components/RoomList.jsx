@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import apiFetch from '../utils/apiFetch';
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
@@ -8,7 +9,7 @@ const RoomList = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/chatroom/all', {
+        const response = await apiFetch('/api/chatroom/all', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -16,11 +17,10 @@ const RoomList = () => {
           },
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to load chat rooms.');
-        }
-
         const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
         setRooms(data.rooms);
       } catch (error) {
         console.error('Error fetching rooms:', error);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import apiFetch from '../utils/apiFetch';
 
 const CreateRoom = () => {
   const [roomName, setRoomName] = useState('');
@@ -12,7 +13,7 @@ const CreateRoom = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/api/chatroom/create', {
+      const response = await apiFetch('/api/chatroom/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

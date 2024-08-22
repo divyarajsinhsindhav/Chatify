@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import apiFetch from '../utils/apiFetch';
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState('');
@@ -14,7 +15,7 @@ export default function SignUp() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+      const response = await apiFetch(`/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

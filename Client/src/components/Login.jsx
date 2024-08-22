@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import apiFetch from '../utils/apiFetch';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -9,7 +10,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await apiFetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
-
-const socket = io('http://localhost:3000');
+import apiFetch from '../utils/apiFetch';
 
 const RoomInfo = () => {
   const { id: roomName } = useParams();
@@ -15,7 +13,7 @@ const RoomInfo = () => {
   useEffect(() => {
     const fetchRoomInfo = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/chatroom/info/${roomName}`, {
+        const response = await apiFetch(`/api/chatroom/info/${roomName}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -43,7 +41,7 @@ const RoomInfo = () => {
   const handleJoinRoom = async () => {
     const userId = localStorage.getItem('userId');
     try {
-      const response = await fetch(`http://localhost:3000/api/chatroom/join/${roomName}`, {
+      const response = await apiFetch(`/api/chatroom/join/${roomName}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +63,7 @@ const RoomInfo = () => {
 
   const handleLeaveRoom = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/chatroom/leave/${roomName}`, {
+      const response = await apiFetch(`/api/chatroom/leave/${roomName}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
