@@ -61,5 +61,5 @@ To get started with Chatify, follow these steps:
 
 6. **Access the Application**
 
-    Open `http://localhost:3000` in your browser to access Chatify.
+    Open `http://localhost:5173` in your browser to access Chatify.
 
