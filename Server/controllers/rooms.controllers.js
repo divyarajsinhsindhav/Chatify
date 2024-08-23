@@ -115,16 +115,13 @@ exports.leaveRoom = async (req, res) => {
         return res.status(404).json({ message: 'Room not found' });
       }
   
-      // Check if the user is a member
       if (!room.members.includes(userId)) {
         return res.status(400).json({ message: 'Not a member of this room' });
       }
   
-      // Remove the user from the room
       room.members = room.members.filter(id => id.toString() !== userId);
       await room.save();
   
-      // Optionally, update the user's room list
       await User.findByIdAndUpdate(userId, { $pull: { rooms: room._id } });
   
       res.status(200).json({ message: 'Left room successfully' });
@@ -139,8 +136,8 @@ exports.getRoomInfo = async (req, res) => {
     const { roomName } = req.params;
 
     try {
-        // Find the room
         const room = await Room.findOne({ name: roomName }).populate('createdBy', 'username').populate('members', 'username');
+        console.log(roomName)
         if (!room) {
             return res.status(404).json({ message: 'Room not found' });
         }

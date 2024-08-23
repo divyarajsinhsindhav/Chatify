@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
                 content: data.content,
                 sender: userId,
                 room: data.room,
+                date: data.date,
                 time: data.time,
             });
 
@@ -41,6 +42,7 @@ io.on('connection', (socket) => {
             // Emit the message to everyone in the room
             io.to(data.room).emit('message', {
                 content: newMessage.content,
+                date: newMessage.date,
                 time: newMessage.createdAt,
                 room: newMessage.room,
                 sender: newMessage.sender.username, // Assuming you want to send the username

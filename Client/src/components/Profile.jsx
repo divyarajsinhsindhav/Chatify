@@ -67,77 +67,78 @@ const Profile = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 mt-5 bg-white border border-gray-300 rounded-md shadow-md">
-      <h1 className="text-3xl font-bold mb-4 text-center">Profile</h1>
-      {user ? (
-        <div>
-          {isEditing ? (
-            <>
-              <div className="mb-4">
-                <label className="text-gray-700 font-semibold">Username:</label>
-                <input
-                  type="text"
-                  name="username"
-                  value={updatedUser.username}
-                  onChange={handleInputChange}
-                  className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="text-gray-700 font-semibold">Email:</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={updatedUser.email}
-                  onChange={handleInputChange}
-                  className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                />
-              </div>
-              {error && <div className="text-red-500">{error}</div>}
-              <div className="flex justify-center mt-6">
-                <button
-                  onClick={handleSaveChanges}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="mb-4">
-                <strong className="text-gray-700">Username:</strong>
-                <div className="text-gray-900">{user.username}</div>
-              </div>
-              <div className="mb-4">
-                <strong className="text-gray-700">Email:</strong>
-                <div className="text-gray-900">{user.email}</div>
-              </div>
-              <div className="mb-4">
-                <strong className="text-gray-700">Joined:</strong>
-                <div className="text-gray-900">{new Date(user.createdAt).toLocaleDateString()}</div>
-              </div>
-              <div className="flex justify-center mt-6">
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
-                >
-                  Edit Profile
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Logout
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+    <div className="max-w-md mx-auto p-8 mt-10 bg-gradient-to-r from-blue-50 to-blue-100 border border-gray-200 rounded-xl shadow-lg">
+  <h1 className="text-4xl font-extrabold mb-6 text-center text-blue-700">Profile</h1>
+  {user ? (
+    <div>
+      {isEditing ? (
+        <>
+          <div className="mb-6">
+            <label className="text-blue-800 font-semibold">Username:</label>
+            <input
+              type="text"
+              name="username"
+              value={updatedUser.username}
+              onChange={handleInputChange}
+              className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="text-blue-800 font-semibold">Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={updatedUser.email}
+              onChange={handleInputChange}
+              className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          {error && <div className="text-red-600 text-sm">{error}</div>}
+          <div className="flex justify-between mt-8">
+            <button
+              onClick={handleSaveChanges}
+              className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition-all"
+            >
+              Save Changes
+            </button>
+          </div>
+        </>
       ) : (
-        <div className="text-center text-gray-700">Loading user data...</div>
+        <>
+          <div className="mb-6">
+            <strong className="text-blue-800">Username:</strong>
+            <div className="text-gray-900 mt-1 text-lg">{user.username}</div>
+          </div>
+          <div className="mb-6">
+            <strong className="text-blue-800">Email:</strong>
+            <div className="text-gray-900 mt-1 text-lg">{user.email}</div>
+          </div>
+          <div className="mb-6">
+            <strong className="text-blue-800">Joined:</strong>
+            <div className="text-gray-900 mt-1 text-lg">{new Date(user.createdAt).toLocaleDateString()}</div>
+          </div>
+          <div className="flex justify-between mt-8">
+            <button
+              onClick={() => setIsEditing(true)}
+              className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded-lg transition-all"
+            >
+              Edit Profile
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-6 rounded-lg transition-all"
+            >
+              Logout
+            </button>
+          </div>
+        </>
       )}
     </div>
+  ) : (
+    <div className="text-center text-gray-700">Loading user data...</div>
+  )}
+</div>
+
   );
 };
 
