@@ -11,7 +11,7 @@ const ChatBox = () => {
   const { id: roomId } = useParams();
   const match = useMatch("/chatroom/:id");
   const bottomRef = useRef(null);
-  const [roomExists, setRoomExists] = useState(null); // null indicates checking state
+  const [roomExists, setRoomExists] = useState(null);
   const navigate = useNavigate();
 
   const handleSendMessage = (e) => {
@@ -57,7 +57,7 @@ const ChatBox = () => {
       };
       checkRoomExists();
     }
-  }, [roomId, match]);
+  }, [roomId, match, navigate]);
 
   useEffect(() => {
     if (!roomId || !token || roomExists === null) return;
@@ -65,7 +65,7 @@ const ChatBox = () => {
     if (roomExists) {
       socket.emit("joinRoom", { roomId, token });
     }
-  }, [roomId, token, roomExists]);
+  }, [roomId, roomExists]);
 
   useEffect(() => {
     if (!match || !roomExists) return;
@@ -100,7 +100,7 @@ const ChatBox = () => {
     return () => {
       socket.off("message", fetchMessages);
     };
-  }, [roomId, match, roomExists, token]);
+  }, [roomId, match, roomExists]);
 
   useEffect(() => {
     if (bottomRef.current) {
@@ -140,51 +140,48 @@ const ChatBox = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 bg-gray-900 border border-gray-700 rounded-md">
-            {messages.map((msg, index) => (
-              <div key={index} className="mb-4 p-2 rounded bg-gray-800">
-                <div className="flex items-center mb-1">
-                  <div className="font-semibold text-white">
-                    {msg.sender.username}
-                  </div>
-                  <div className="text-xs text-gray-500 ml-2">
-                    on {msg.date} @ {msg.time}
-                  </div>
+          {messages.map((msg, index) => (
+            <div key={index} className="mb-4 p-2 rounded bg-gray-800">
+              <div className="flex items-center mb-1">
+                <div className="font-semibold text-white">{msg.sender.username}</div>
+                <div className="text-xs text-gray-500 ml-2">
+                  on {msg.date} @ {msg.time}
                 </div>
-                <div className="text-sm text-gray-300">{msg.content}</div>
               </div>
-            ))}
-            <div ref={bottomRef} />
+              
+              <div className="text-sm text-gray-300">{msg.content}</div>
+            </div>
+          ))}
+          <div ref={bottomRef} />
           </div>
 
-          <form
-            onSubmit={handleSendMessage}
-            className="flex mt-4 bg-gray-900 border-t border-gray-700 p-3 rounded-md shadow-lg"
+        <form onSubmit={handleSendMessage} className="flex mt-4 bg-gray-900 border-t border-gray-700 p-3 rounded-md shadow-lg" >
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Type your message..."
+            className="flex-1 p-3 border-none rounded-l-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          <button
+            type="submit"
+            className="p-3 bg-blue-600 text-white rounded-r-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
           >
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 p-3 border-none rounded-l-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <button
-              type="submit"
-              className="p-3 bg-blue-600 text-white rounded-r-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M2.929 6.343a1 1 0 010-1.414l6.364-6.364a1 1 0 011.414 0l6.364 6.364a1 1 0 01-1.414 1.414L10 2.828V18a1 1 0 11-2 0V2.828L4.343 4.929a1 1 0 01-1.414-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </form>
+              <path
+                fillRule="evenodd"
+                d="M2.929 6.343a1 1 0 010-1.414l6.364-6.364a1 1 0 011.414 0l6.364 6.364a1 1 0 01-1.414 1.414L10 2.828V18a1 1 0 11-2 0V2.828L4.343 4.929a1 1 0 01-1.414-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </form>
+
         </>
       ) : (
         <div className="flex flex-col items-center justify-center h-full">

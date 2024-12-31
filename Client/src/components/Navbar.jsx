@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { disconnectSocket } from '../utils/socketConnection';
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -14,6 +15,7 @@ const Navbar = () => {
     localStorage.removeItem('userId');
     setIsAuthenticated(false);
     window.location.href = '/login';
+    disconnectSocket();
   };
 
   return (

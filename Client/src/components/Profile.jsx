@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import apiFetch from '../utils/apiFetch';
+import { disconnectSocket } from '../utils/socketConnection';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -63,7 +64,9 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     window.location.href = '/login';
+    disconnectSocket();
   };
 
   return (

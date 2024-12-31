@@ -1,4 +1,4 @@
-const Room = require('../models/rooms.models');
+const {Room} = require('../models/rooms.models');
 const User = require('../models/user.model');
 const Message = require('../models/message.model');
 

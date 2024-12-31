@@ -25,10 +25,10 @@ const RoomInfo = () => {
           throw new Error(data.message);
         }
         setRoom(data);
-
         const userId = localStorage.getItem('userId');
         setIsMember(data.members.some(member => member._id === userId));
-        setIsCreator(data.createdBy._id === userId); 
+        setIsCreator(data.createdBy._id === userId);
+
       } catch (err) {
         setError(err.message);
       }
@@ -111,24 +111,21 @@ const RoomInfo = () => {
           &larr; Back
         </button>
         <div className="bg-white p-6 rounded-lg shadow-lg space-y-4">
-  <h1 className="text-4xl font-extrabold text-blue-600">
-    {room ? room.name : 'Room Name'}
-  </h1>
-  
-  <p className="text-xl text-gray-700">
-    {room ? room.description : 'Room Description'}
-  </p>
-  
-  <div className="flex items-center space-x-2 text-lg text-gray-600">
-    <span className="font-medium">Creator:</span>
-    <span className="text-gray-800">{room ? room.createdBy.username : 'Creator'}</span>
-  </div>
-  
-  <div className="flex items-center space-x-2 text-lg text-gray-600">
-    <span className="font-medium">Created At:</span>
-    <span className="text-gray-800">{room ? new Date(room.createdAt).toLocaleDateString() : ''}</span>
-  </div>
-</div>
+          <h1 className="text-4xl font-extrabold text-blue-600">
+            {room ? room.name : 'Room Name'}
+          </h1>
+          <p className="text-xl text-gray-700">
+            {room ? room.description : 'Room Description'}
+          </p>
+          <div className="flex items-center space-x-2 text-lg text-gray-600">
+            <span className="font-medium">Creator:</span>
+            <span className="text-gray-800">{room ? room.createdBy.username : 'Creator'}</span>
+          </div>
+          <div className="flex items-center space-x-2 text-lg text-gray-600">
+            <span className="font-medium">Created At:</span>
+            <span className="text-gray-800">{room ? new Date(room.createdAt).toLocaleDateString() : ''}</span>
+          </div>
+        </div>
 
         {error && <div className="text-red-500 text-center text-lg">{error}</div>}
         <div className="flex flex-col space-y-4">
@@ -161,22 +158,21 @@ const RoomInfo = () => {
       <div className="flex-1 bg-white p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Room Members</h2>
         <ul className="space-y-4">
-  {room ? (
-    room.members.map(member => (
-      <li key={member._id} className="flex items-center space-x-4 p-3 bg-gray-100 rounded-lg shadow hover:bg-gray-200 transition-colors duration-200">
-        <div className="w-12 h-12 bg-blue-500 text-white flex items-center justify-center rounded-full">
-          {member.username[0].toUpperCase()}
-        </div>
-        <div className="text-xl text-gray-700 font-semibold">
-          {member.username}
-        </div>
-      </li>
-    ))
-  ) : (
-    <div className="text-center text-gray-700 text-lg animate-pulse">Loading room information...</div>
-  )}
-</ul>
-
+          {room ? (
+            room.members.map(member => (
+              <li key={member._id} className="flex items-center space-x-4 p-3 bg-gray-100 rounded-lg shadow hover:bg-gray-200 transition-colors duration-200">
+                <div className="w-12 h-12 bg-blue-500 text-white flex items-center justify-center rounded-full">
+                  {member.username[0].toUpperCase()}
+                </div>
+                <div className="text-xl text-gray-700 font-semibold">
+                  {member.username}
+                </div>
+              </li>
+            ))
+          ) : (
+            <div className="text-center text-gray-700 text-lg animate-pulse">Loading room information...</div>
+          )}
+        </ul>
       </div>
     </div>
   );

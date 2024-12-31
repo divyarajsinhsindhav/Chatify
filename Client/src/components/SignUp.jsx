@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import apiFetch from '../utils/apiFetch';
 
@@ -10,6 +10,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  console.log(firstName)
 
   const handleSubmit = async (e) => {
     e.preventDefault();

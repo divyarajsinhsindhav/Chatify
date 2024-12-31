@@ -1,23 +1,30 @@
-import React from 'react';
-import ChatBox from './ChatBox';
-import RoomList from './RoomList';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaSignOutAlt } from 'react-icons/fa';
+import ChatBox from './ChatBox';
+import RoomList from './RoomList';
+import disconnectSocket from '../utils/socketConnection';
 
 const ChatRoom = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
 
-  if (!userId) {
-    navigate('/login'); // Redirect to login if user is not authenticated
-    return null;
-  }
+  useEffect(() => {
+    if (!userId) {
+      navigate('/login'); // Redirect to login if user is not authenticated
+    }
+  }, [userId, navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     navigate('/login');
+    disconnectSocket();
   };
+
+  if (!userId) {
+    return null; // Prevent rendering until redirect is handled
+  }
 
   return (
     <div className="flex h-screen">

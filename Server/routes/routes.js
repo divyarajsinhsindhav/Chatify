@@ -27,17 +27,27 @@ router.delete('/chatroom/delete/:roomName', authantication, deleteRoom)
 router.put('/chatroom/update/:roomName', authantication, updateRoom)
 
 router.get('/messages', async (req, res) => {
-    try {
-      const { roomId } = req.query;
-      const messages = await Message.find({ room: roomId })
-        .populate('sender', 'username')
-        .sort({ createdAt: 1 });
-  
-      res.json(messages);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch messages' });
+  try {
+    const { roomId } = req.query;
+
+    // Validate roomId
+    if (!roomId) {
+      return res.status(400).json({ error: 'Room ID is required' });
     }
-  });
+
+    // Fetch messages
+    const messages = await Message.find({ room: roomId })
+      .populate('sender', 'username') // Fetch only username from sender
+      .sort({ createdAt: 1 }); // Sort messages by creation date (ascending)
+
+    // Respond with messages
+    res.status(200).json(messages);
+  } catch (error) {
+    console.error('Error fetching messages:', error); // Log error
+    res.status(500).json({ error: 'An error occurred while fetching messages' });
+  }
+});
+
   
 
 module.exports = router;
